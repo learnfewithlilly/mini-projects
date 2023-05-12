@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ChatGPT Integration</title>
+  </head>
+  <body>
+    <div>
+      <input type="text" id="text" />
+      <button onclick="callChatGPT()">Ask ChatGPT</button>
+    </div>
+
+    <div>
+      <p id="result"></p>
+    </div>
+
+    <script>
+      const API_KEY = 'your api key'
+      const text = document.querySelector("#text");
+      const resp = document.querySelector("#result");
+      const callChatGPT = async () => {
+        const url = "https://chatgpt-api7.p.rapidapi.com/ask";
+        const options = {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "X-RapidAPI-Key": API_KEY,
+            "X-RapidAPI-Host": "chatgpt-api7.p.rapidapi.com",
+          },
+          body: JSON.stringify({
+            query: text.value,
+          }),
+        };
+
+        try {
+          const response = await fetch(url, options);
+          const result = await response.json();
+          console.log(result)
+          resp.innerText = result.response;
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    </script>
+  </body>
+</html>
